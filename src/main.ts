@@ -20,7 +20,7 @@ function addContact(contact: Contact): Contact[] {
 }
 
 function render(contacts: Contact[]) {
-  // const main = document.getElementById("main")!;
+  const main = document.getElementById("main")!;
 
   contacts.forEach((contact) => {
     const p = document.createElement("p");
