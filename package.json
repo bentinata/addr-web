@@ -1,6 +1,3 @@
 {
-  "name": "addr-web",
-  "devDependencies": {
-    "parcel": "^2.16.4"
-  }
+  "name": "addr-web"
 }

@@ -1,10 +1,13 @@
-interface Contact {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-}
+/**
+ * @typedef {{
+ *  id: number,
+ *  name: string,
+ *  email: string,
+ *  phone: number,
+ * }} Contact
+ */
 
+/** @type {Contact[]} */
 const contacts = [
   {
     id: 1,
@@ -14,13 +17,20 @@ const contacts = [
   },
 ];
 
-function addContact(contact: Contact): Contact[] {
+/**
+ * @param {Contact} contact
+ * @returns {Contact[]}
+ */
+function addContact(contact) {
   contacts.push(contact);
   return contacts;
 }
 
-function render(contacts: Contact[]) {
-  const main = document.getElementById("main")!;
+/**
+ * @param {Contact[]} contacts
+ */
+function render(contacts) {
+  const main = document.getElementById("main");
 
   contacts.forEach((contact) => {
     const p = document.createElement("p");
