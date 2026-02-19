@@ -1,30 +1,4 @@
-/**
- * @typedef {{
- *  id: number,
- *  name: string,
- *  email: string,
- *  phone: number,
- * }} Contact
- */
-
-/** @type {Contact[]} */
-const contacts = [
-  {
-    id: 1,
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "+6281234567",
-  },
-];
-
-/**
- * @param {Contact} contact
- * @returns {Contact[]}
- */
-function addContact(contact) {
-  contacts.push(contact);
-  return contacts;
-}
+import * as Contact from "./contact.mjs";
 
 /**
  * @param {Contact[]} contacts
@@ -39,4 +13,4 @@ function render(contacts) {
   });
 }
 
-render(contacts);
+render(Contact.contacts);
