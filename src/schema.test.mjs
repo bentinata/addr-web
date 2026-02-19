@@ -43,44 +43,41 @@ describe("number", () => {
 });
 
 describe("array", () => {
-  it("returns mapped array when given valid items", () => {
-    const validate = array(string);
-    assert.deepStrictEqual(validate(["a", "b", "c"]), ["a", "b", "c"]);
+  it("returns mapped array when given correct items", () => {
+    const parse = array(string);
+    assert.deepStrictEqual(parse(["a", "b", "c"]), ["a", "b", "c"]);
   });
 
   it("throws when given a non-array", () => {
-    const validate = array(string);
-    assert.throws(() => validate("not array"), /Expected an array/);
+    const parse = array(string);
+    assert.throws(() => parse("not array"), /Expected an array/);
   });
 
-  it("throws when an item fails the inner validator", () => {
-    const validate = array(number);
-    assert.throws(() => validate([1, "two", 3]), /Expected number, got string/);
+  it("throws when an item fails the inner parser", () => {
+    const parse = array(number);
+    assert.throws(() => parse([1, "two", 3]), /Expected number, got string/);
   });
 
-  it("works with custom validator", () => {
-    const validate = array(number);
-    assert.deepStrictEqual(validate([1, 2, 3]), [1, 2, 3]);
+  it("works with custom parser", () => {
+    const parse = array(number);
+    assert.deepStrictEqual(parse([1, 2, 3]), [1, 2, 3]);
   });
 });
 
 describe("optional", () => {
   it("returns undefined when given undefined", () => {
-    const validate = optional(string);
-    assert.strictEqual(validate(undefined), undefined);
+    const parse = optional(string);
+    assert.strictEqual(parse(undefined), undefined);
   });
 
-  it("validates and returns value when given defined value", () => {
-    const validate = optional(string);
-    assert.strictEqual(validate("hello"), "hello");
+  it("parses and returns value when given defined value", () => {
+    const parse = optional(string);
+    assert.strictEqual(parse("hello"), "hello");
   });
 
-  it("throws when given invalid value", () => {
-    const validate = optional(number);
-    assert.throws(
-      () => validate("not a number"),
-      /Expected number, got string/,
-    );
+  it("throws when given wrong type", () => {
+    const parse = optional(number);
+    assert.throws(() => parse("not a number"), /Expected number, got string/);
   });
 });
 
@@ -122,38 +119,38 @@ describe("phone", () => {
 });
 
 describe("define", () => {
-  it("returns object with validated values", () => {
-    const validate = define({ name: string, age: number });
-    assert.deepStrictEqual(validate({ name: "Alice", age: 30 }), {
+  it("returns object with parsed values", () => {
+    const parse = define({ name: string, age: number });
+    assert.deepStrictEqual(parse({ name: "Alice", age: 30 }), {
       name: "Alice",
       age: 30,
     });
   });
 
   it("throws when given non-object", () => {
-    const validate = define({ name: string });
-    assert.throws(() => validate("string"), /Expected an object/);
-    assert.throws(() => validate(null), /Expected an object/);
+    const parse = define({ name: string });
+    assert.throws(() => parse("string"), /Expected an object/);
+    assert.throws(() => parse(null), /Expected an object/);
   });
 
-  it("throws when a field fails validation", () => {
-    const validate = define({ name: string, age: number });
+  it("throws when a field cannot be parsed", () => {
+    const parse = define({ name: string, age: number });
     assert.throws(
-      () => validate({ name: "Alice", age: "thirty" }),
+      () => parse({ name: "Alice", age: "thirty" }),
       /Expected number, got string/,
     );
   });
 
   it("works with optional and array", () => {
-    const validate = define({
+    const parse = define({
       name: string,
       tags: optional(array(string)),
     });
-    assert.deepStrictEqual(validate({ name: "Bob", tags: ["a", "b"] }), {
+    assert.deepStrictEqual(parse({ name: "Bob", tags: ["a", "b"] }), {
       name: "Bob",
       tags: ["a", "b"],
     });
-    assert.deepStrictEqual(validate({ name: "Bob" }), {
+    assert.deepStrictEqual(parse({ name: "Bob" }), {
       name: "Bob",
       tags: undefined,
     });
