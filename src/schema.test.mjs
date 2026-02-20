@@ -141,6 +141,15 @@ describe("define", () => {
     );
   });
 
+  it("throws with list of field when multiple fields cannot be parsed", () => {
+    const parse = define({ name: string, age: number });
+
+    assert.throws(
+      () => parse({ name: 0b0010_0101_1110, age: "30" }),
+      /"name":.*,"age":.*/,
+    );
+  });
+
   it("works with optional and array", () => {
     const parse = define({
       name: string,

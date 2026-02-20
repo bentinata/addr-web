@@ -69,9 +69,17 @@ export const define = (definition) => (unparsed) => {
   }
 
   const result = {};
+  let errors;
   for (const key in definition) {
-    result[key] = definition[key](unparsed[key]);
+    try {
+      result[key] = definition[key](unparsed[key]);
+    } catch (e) {
+      errors = { ...errors, [key]: e.message };
+      continue;
+    }
   }
+
+  if (errors) throw new Error(JSON.stringify(errors, null));
 
   return result;
 };
