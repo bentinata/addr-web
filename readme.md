@@ -1,4 +1,4 @@
-# bear-addr
+# bear-book
 
 A web browser client-only address book. Implemented with as little dependencies as possible. Main goal is to serve as reference for [bearmentor.com](https://bearmentor.com) mentees.
 
