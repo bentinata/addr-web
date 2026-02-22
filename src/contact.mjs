@@ -16,7 +16,7 @@ export const contacts = [
     id: 1,
     name: "John Balatro",
     email: "john.doe@example.com",
-    phone: "+6281234567",
+    phone: +6281234567,
   },
 ];
 
